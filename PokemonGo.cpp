@@ -134,7 +134,7 @@ class Pokemon
 {
     protected:
         string name;
-        types pokemon1, pokemon2;
+        types type1, type2;
         int base_attack, base_defense, base_stamina;
         int iv_attack, iv_defense, iv_stamina;
         float level;
@@ -151,15 +151,26 @@ class Pokemon
     }
     float setLevel(float level)
     {
-        if(level >= 0)
-        {
             if(level >= 0)
+            {
                 this->level = level;
-        }
-        double getAttack()
-        {
-            return (base_attack + iv_attack) * CP_scalar[int((level - 1))];
-        }
+            }
+    }
+    double getAttack()
+    {
+        return (base_attack + iv_attack) * CP_scalar[int((level - 1) * 2)];
+    }
+    double getDefense()
+    {
+        return (base_defense + iv_defense) * CP_scalar[int((level - 1) * 2)];
+    }
+    double getStamina()
+    {
+        return (base_stamina + iv_stamina) * CP_scalar[int((level - 1) * 2)];
+    }
+    double getCP()
+    {
+        return max((int)floor(getAttack() * sqrt(getDefense() * getStamina) / 10), 10);
     }
 };
 
