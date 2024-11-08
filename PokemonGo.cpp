@@ -103,6 +103,65 @@ double CP_scalar[101] =
         0.8352999900, 0.8377999900,
         0.8402999900, 0.84279999
     };
+class Move
+{
+    public:
+    string name;
+    types movetype;
+    int damage;
+};
+class ThunderShock : public Move
+{
+    public:
+    ThunderShock()
+    {
+        name = "Thunder Shock";
+        movetype = Electric;
+        damage = 3;
+    }
+};
+class FireSpin : public Move{
+    public:
+    FireSpin()
+    {
+        name = "Fire Spin";
+        movetype = Fire;
+        damage = 11;
+    }
+};
+
+class Pokemon
+{
+    protected:
+        string name;
+        types pokemon1, pokemon2;
+        int base_attack, base_defense, base_stamina;
+        int iv_attack, iv_defense, iv_stamina;
+        float level;
+        Move *fastMove;
+
+    public:
+    string getName()
+    {
+        return name;
+    }
+    float getLevel()
+    {
+        return level;
+    }
+    float setLevel(float level)
+    {
+        if(level >= 0)
+        {
+            if(level >= 0)
+                this->level = level;
+        }
+        double getAttack()
+        {
+            return (base_attack + iv_attack) * CP_scalar[int((level - 1))];
+        }
+    }
+};
 
 int main()
 {
