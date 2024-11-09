@@ -126,7 +126,7 @@ class FireSpin : public Move{
     {
         name = "Fire Spin";
         movetype = Fire;
-        damage = 11;
+        damage = 13;
     }
 };
 
