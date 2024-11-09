@@ -170,11 +170,79 @@ class Pokemon
     }
     double getCP()
     {
-        return max((int)floor(getAttack() * sqrt(getDefense() * getStamina) / 10), 10);
+        return max((int)floor(getAttack() * sqrt(getDefense() * getStamina()) / 10), 10);
     }
+    double getHP()
+    {
+        return floor(getStamina());
+    }
+    double moveDamage(Pokemon& P)
+    {
+        double stab = 1;
+        if(P.type1 == fastMove->movetype || type2 == fastMove->movetype)
+        {
+              stab = 1.2;
+        }
+        double move_eff = EFF[fastMove->movetype][P.type1] * EFF[fastMove->movetype][P.type2];
+        return floor(0.65 * fastMove->damage * getAttack() / P.getDefense() * stab * move_eff) + 1;
+    }
+};
+
+class Pikachu: public Pokemon
+{
+    public:
+        Pikachu()
+        {
+            name="Pikachu";
+            type1 = Electric;
+            type2 = None;
+            base_attack = 112;
+            base_defense = 96;
+            base_stamina = 111;
+            iv_attack = 15;
+            iv_defense = 15;
+            iv_stamina = 15;
+            level = 30;
+            fastMove = new ThunderShock();
+        }
+};
+
+class Charzard: public Pokemon
+{
+    public:
+        Charzard()
+        {
+            name="Charzard";
+            type1= Fire;
+            type2 = Flying;
+            base_attack = 223;
+            base_defense = 173;
+            base_stamina = 186;
+            iv_attack = 15;
+            iv_defense = 15;
+            iv_stamina = 15;
+            level = 30;
+            fastMove = new FireSpin();
+        }
 };
 
 int main()
 {
-    return 0;
+    Pokemon **pokedex = new Pokemon*[2];
+    pokedex[0] = new Pikachu(); 
+    pokedex[1] = new Charzard();
+
+    for(int i = 0; i < 2; i++)
+    {
+        cout << pokedex[i] ->getName() << " ";
+        cout << pokedex[i] ->getLevel() << " ";
+        cout << pokedex[i] ->getAttack() << " ";
+        cout << pokedex[i] ->getDefense() << " ";
+        cout << pokedex[i] ->getStamina() << " ";
+        cout << pokedex[i] ->getCP() << " ";
+        cout << pokedex[i] ->getHP() << endl;
+    } 
+
+    cout << pokedex[0]->moveDamage(*pokedex[1]) << " ";
+    cout << pokedex[1]->moveDamage(*pokedex[0]) << " ";
 }
